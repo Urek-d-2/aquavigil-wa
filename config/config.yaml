@@ -1,0 +1,91 @@
+# ============================================================
+# AquaVigil-WA — Configuration globale du pipeline
+# ============================================================
+
+# --- Base de données Kraken2 ---
+kraken2_db: "data/kraken2_db/minikraken2_v2_8GB"
+
+# --- Paramètres Kraken2 ---
+kraken2:
+  confidence: 0.1          # Seuil de confiance (0 = plus sensible, 1 = plus spécifique)
+  threads: 4
+  report_minimizer_data: true
+
+# --- Paramètres Bracken ---
+bracken:
+  read_length: 150          # Longueur des reads (HiSeq: 150, MiSeq: 250-300)
+  taxonomic_level: "S"      # S=Espèce, G=Genre, F=Famille
+  threshold: 10             # Reads minimum pour garder un taxon
+
+# --- Paramètres Trimmomatic ---
+trimmomatic:
+  adapters: "TruSeq3-PE.fa"
+  leading: 3
+  trailing: 3
+  sliding_window: "4:15"
+  minlen: 50
+  phred_threshold: 20
+
+# --- Pathogènes cibles (à confirmer par Membre 4) ---
+target_pathogens:
+  priority_1:
+    - "Vibrio cholerae"
+    - "Salmonella typhi"
+    - "Poliovirus"
+  priority_2:
+    - "Rotavirus"
+    - "Norovirus"
+    - "Shigella"
+  amr_indicators:
+    - "Klebsiella pneumoniae"
+    - "Escherichia coli"
+
+# --- Biomarqueurs de normalisation ---
+normalization:
+  primary_marker: "Pepper mild mottle virus"    # PMMoV
+  secondary_marker: "crAssphage"                # CrAssphage
+  scaling_factor: 1000000                       # ×10⁶
+
+# --- Seuils d'alerte (à valider par Membre 2) ---
+alert_thresholds:
+  yellow: 2.0     # signal_N / moyenne_mobile_4_semaines > 2.0
+  red: 4.0        # signal_N / moyenne_mobile_4_semaines > 4.0
+
+# --- Sites de prélèvement Lomé ---
+sampling_sites:
+  - id: "LMC-001"
+    name: "Canal de Bè"
+    lat: 6.1375
+    lon: 1.2168
+    type: "open_canal"
+  - id: "LMC-002"
+    name: "Grand Marché de Lomé / Adawlato"
+    lat: 6.1320
+    lon: 1.2200
+    type: "market_drain"
+  - id: "LMC-003"
+    name: "Quartier Agoè-Nyivé"
+    lat: 6.1900
+    lon: 1.2100
+    type: "peri_urban_drain"
+  - id: "LMC-004"
+    name: "Station d'épuration de Lomé"
+    lat: 6.1050
+    lon: 1.2400
+    type: "wwtp"
+  - id: "LMC-005"
+    name: "Port de Lomé"
+    lat: 6.1200
+    lon: 1.2650
+    type: "port_drainage"
+
+# --- Répertoires ---
+dirs:
+  data_simulated: "data/simulated"
+  data_ncbi: "data/ncbi_sra"
+  data_real: "data/real_lome"
+  results_qc: "results/qc"
+  results_kraken: "results/kraken2_output"
+  results_bracken: "results/bracken_output"
+  results_normalized: "results/normalized"
+  results_alerts: "results/alerts"

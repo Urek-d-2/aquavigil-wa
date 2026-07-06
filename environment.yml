@@ -1,0 +1,34 @@
+name: aquavigil-wbe
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  # --- Orchestration pipeline ---
+  - snakemake>=7.32.4
+
+  # --- Classification taxonomique ---
+  - kraken2>=2.1.3
+  - bracken>=2.8
+
+  # --- Contrôle qualité reads ---
+  - fastqc>=0.12.1
+  - trimmomatic>=0.39
+  - multiqc>=1.19
+
+  # --- Python utilitaires pipeline ---
+  - python>=3.9
+  - pandas>=2.0
+  - numpy>=1.24
+  - biopython>=1.81
+  - pyyaml>=6.0
+  - click>=8.1
+
+  # --- Tests ---
+  - pytest>=7.4
+  - pytest-cov>=4.1
+
+  # --- Simulation données (Phase 1) ---
+  - pip:
+    - insilicoseq>=2.0.1

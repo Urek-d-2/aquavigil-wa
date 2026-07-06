@@ -1,0 +1,34 @@
+"""
+AquaVigil-WA — Pipeline principal Snakemake
+Surveillance épidémiologique par métagénomique des eaux usées
+Lomé, Togo — 2026
+"""
+import os
+import yaml
+from pathlib import Path
+
+# --- Chargement de la configuration ---
+configfile: "config/config.yaml"
+
+# --- Détection automatique des échantillons ---
+DATA_DIR = config["dirs"]["data_simulated"]   # Changer selon la phase
+
+SAMPLES, = glob_wildcards(os.path.join(DATA_DIR, "{sample}_R1.fastq.gz"))
+
+# --- Règle finale : tous les outputs attendus ---
+rule all:
+    input:
+        # QC
+        expand("results/qc/{sample}_R1_fastqc.html", sample=SAMPLES),
+        expand("results/qc/{sample}_R2_fastqc.html", sample=SAMPLES),
+        "results/qc/multiqc_report.html",
+        # Classification
+        expand("results/kraken2_output/{sample}.report.txt", sample=SAMPLES),
+        expand("results/bracken_output/{sample}.bracken.txt", sample=SAMPLES),
+        # Rapport agrégé
+        "results/summary_report.tsv",
+
+# --- Inclusion des règles modulaires ---
+include: "rules/qc.smk"
+include: "rules/classify.smk"
+include: "rules/report.smk"

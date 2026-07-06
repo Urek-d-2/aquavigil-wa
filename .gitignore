@@ -1,0 +1,65 @@
+# ============================================================
+# AquaVigil-WA — .gitignore
+# ============================================================
+
+# --- Données de séquençage (trop volumineuses pour Git) ---
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bam.bai
+*.sam
+
+# --- Base de données Kraken2 (8 GB+) ---
+data/kraken2_db/
+*.k2d
+*.kmer_distrib
+
+# --- Données terrain Lomé (accès restreint) ---
+data/real_lome/
+
+# --- Données NCBI SRA (volumineuses, re-téléchargeables) ---
+data/ncbi_sra/*.fastq
+data/ncbi_sra/*.fastq.gz
+data/ncbi_sra/*.sra
+
+# --- Résultats intermédiaires volumineux ---
+results/qc/
+results/kraken2_output/
+results/bracken_output/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Environnements Conda ---
+.conda/
+envs/
+
+# --- Éditeurs & OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Secrets & configs locaux ---
+.env
+*.secret
+config/local_config.yaml
+
+# --- Snakemake cache ---
+.snakemake/
