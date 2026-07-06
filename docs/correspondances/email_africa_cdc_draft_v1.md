@@ -42,7 +42,7 @@ I am available for a call at your convenience. Please find our one-pager attache
 
 Respectfully yours,
 
-**[Votre Nom]**
+**DJADE KOKOU DJIDOULA**
 Chef de Projet, AquaVigil-WA
 Data Scientist — Lomé, Togo
 📧 djidulad@gmail.com
