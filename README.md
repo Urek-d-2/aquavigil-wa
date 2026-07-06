@@ -137,7 +137,7 @@ snakemake --cores 4 --use-conda
 
 | Role | Membre | Responsabilité principale |
 |------|--------|--------------------------|
-| **Chef de Projet & Bioinformaticien** | Membre 1 | Pipeline Snakemake, coordination, publication |
+| **Chef de Projet & Data Scientist** | Membre 1 | Pipeline Snakemake, coordination, publication |
 | **Épidémiologiste** | Membre 2 | Protocole terrain, institutions, Introduction article |
 | **Data Scientist Modélisation** | Membre 3 | Normalizer, ARIMA, dashboard |
 | **Biologiste** | Membre 4 | Extraction ADN, QC, séquençage |

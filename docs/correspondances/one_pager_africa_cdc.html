@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 14mm 15mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #1a2b2b; font-size: 10.2pt; line-height: 1.42; }
+  .header { border-bottom: 3px solid #1B6B3A; padding-bottom: 10px; margin-bottom: 14px; display: flex; align-items: flex-end; justify-content: space-between; }
+  .header h1 { color: #1B6B3A; font-size: 25pt; letter-spacing: -0.5px; }
+  .header .wave { font-size: 25pt; }
+  .subtitle { color: #00796B; font-size: 10.5pt; font-weight: 600; margin-top: 2px; }
+  .tagline { background: #1B6B3A; color: #fff; padding: 8px 12px; border-radius: 5px; font-size: 10.5pt; font-weight: 600; margin-bottom: 14px; text-align: center; }
+  h2 { color: #1B6B3A; font-size: 11.5pt; margin: 12px 0 5px; text-transform: uppercase; letter-spacing: 0.4px; border-left: 4px solid #2E8B57; padding-left: 7px; }
+  p { margin-bottom: 5px; }
+  .cols { display: flex; gap: 16px; }
+  .col { flex: 1; }
+  ul { margin-left: 15px; margin-bottom: 6px; }
+  li { margin-bottom: 3px; }
+  .highlight { color: #1B6B3A; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0; font-size: 9pt; }
+  th { background: #1B6B3A; color: #fff; text-align: left; padding: 5px 7px; }
+  td { padding: 4px 7px; border-bottom: 1px solid #A5D6A7; }
+  tr:nth-child(even) td { background: #EBF5EB; }
+  .check { color: #2E8B57; font-weight: 700; }
+  .cross { color: #c0392b; font-weight: 700; }
+  .ask-box { background: #EBF5EB; border: 1px solid #A5D6A7; border-radius: 5px; padding: 9px 12px; margin: 8px 0; }
+  .footer { margin-top: 14px; border-top: 2px solid #1B6B3A; padding-top: 8px; font-size: 8.8pt; color: #555; display: flex; justify-content: space-between; }
+  .footer .contact { color: #1B6B3A; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>AquaVigil-WA <span class="wave">🌊</span></h1>
+      <div class="subtitle">Open-Source Wastewater Surveillance Pipeline for West Africa</div>
+    </div>
+    <div style="text-align:right; font-size:8.5pt; color:#00796B;">
+      Lomé, Togo · 2026<br>Target: <strong>CPHIA Nov 2026</strong>
+    </div>
+  </div>
+
+  <div class="tagline">
+    Detecting cholera, typhoid &amp; polio in wastewater — up to 2 weeks before hospitals are overwhelmed
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <h2>The Problem</h2>
+      <p>In non-sewered West African settings, hospital surveillance detects outbreaks <span class="highlight">2–4 weeks after</span> community spread begins. By then, response is reactive and costly.</p>
+
+      <h2>Our Solution</h2>
+      <ul>
+        <li>Metagenomic sequencing of wastewater from canals, drains &amp; markets — <span class="highlight">no sewer network required</span></li>
+        <li>Multi-pathogen detection in a single sample: <em>V. cholerae</em>, <em>S. typhi</em>, Poliovirus, AMR</li>
+        <li>PMMoV/CrAssphage normalization for cross-site comparability</li>
+        <li>Open-source Snakemake pipeline + real-time alert dashboard</li>
+        <li>PHA4GE-compliant data for continental interoperability</li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h2>Why It Matters for Africa CDC</h2>
+      <ul>
+        <li>First fully <span class="highlight">open-source, sovereign</span> WBE pipeline for non-sewered West Africa</li>
+        <li>Aligned with Africa CDC Continental WES Strategy (GLOWACON)</li>
+        <li>Designed for replication — any country with a sequencer can deploy it</li>
+      </ul>
+
+      <h2>vs. Existing Programs</h2>
+      <table>
+        <tr><th>Feature</th><th>Burkina</th><th>AquaVigil</th></tr>
+        <tr><td>In-country sequencing</td><td class="cross">✗</td><td class="check">✓</td></tr>
+        <tr><td>Open pipeline (GitHub)</td><td class="cross">✗</td><td class="check">✓</td></tr>
+        <tr><td>Multi-pathogen / sample</td><td class="cross">✗</td><td class="check">✓</td></tr>
+        <tr><td>Non-sewered environments</td><td class="cross">✗</td><td class="check">✓</td></tr>
+        <tr><td>Weekly real-time alerts</td><td class="cross">✗</td><td class="check">✓</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Pilot &amp; Timeline</h2>
+  <p><strong>5 sampling sites across Lomé, Togo.</strong> Simulated-data validation (Aug 2026) → real African datasets from NCBI SRA (Sep 2026) → field samples from Lomé (Oct 2026) → bioRxiv preprint (Oct 2026) → <span class="highlight">CPHIA presentation, Addis-Ababa (Nov 2026)</span>.</p>
+
+  <div class="ask-box">
+    <strong style="color:#1B6B3A;">Our Ask:</strong>
+    (1) A 30-min introductory call with your WES/WBE focal point &nbsp;·&nbsp;
+    (2) Guidance on alignment with the Africa CDC WES framework &nbsp;·&nbsp;
+    (3) Consideration for a CPHIA 2026 presentation slot.
+  </div>
+
+  <div class="footer">
+    <div>MIT-licensed pipeline · PHA4GE data standard · An independent research initiative · Team of 4, Togo</div>
+    <div class="contact">djidulad@gmail.com · github.com/Urek-d-2/aquavigil-wa</div>
+  </div>
+</body>
+</html>
