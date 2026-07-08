@@ -117,9 +117,13 @@ def print_summary(df: pd.DataFrame) -> None:
 # ---------------------------------------------------------------------------
 
 def snakemake_main():
-    """Appelé par Snakemake via script: directive."""
-    input_files = list(snakemake.input.bracken_reports)
-    output_tsv  = snakemake.output.tsv
+    """Appelé par Snakemake via script: directive.
+
+    `snakemake` est un objet global injecté au runtime par Snakemake ;
+    il n'existe pas à l'import, d'où les `# noqa: F821`.
+    """
+    input_files = list(snakemake.input.bracken_reports)  # noqa: F821
+    output_tsv  = snakemake.output.tsv                    # noqa: F821
     output_json = output_tsv.replace(".tsv", ".json")
 
     df = aggregate_reports(input_files)
@@ -176,7 +180,7 @@ def cli_main():
 if __name__ == "__main__":
     # Détection mode Snakemake vs CLI
     try:
-        snakemake
+        snakemake  # noqa: F821  (défini seulement en mode script Snakemake)
         snakemake_main()
     except NameError:
         cli_main()

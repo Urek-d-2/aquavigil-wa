@@ -16,6 +16,16 @@ data/kraken2_db/
 *.k2d
 *.kmer_distrib
 
+# --- Génomes de référence (re-téléchargeables via download_references.sh) ---
+data/simulated/references/*.fna
+data/simulated/references/*.fasta
+# ... mais on garde le README qui documente les accessions
+!data/simulated/references/README.md
+
+# --- Données simulées InSilicoSeq (volumineuses) ---
+data/simulated/*.fastq
+data/simulated/*.fastq.gz
+
 # --- Données terrain Lomé (accès restreint) ---
 data/real_lome/
 
