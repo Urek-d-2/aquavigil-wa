@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manuel WBE & Métagénomique — AquaVigil-WA</title>
+<style>
+  :root{
+    --bg:#F3F1E9;--paper:#FBFAF5;--ink:#22271F;--muted:#5C6A5A;--faint:#8A9683;
+    --line:#DED9C9;--line-strong:#CBC4AE;
+    --accent:#15764A;--accent-soft:#E4EFE7;--cyan:#0E7C8B;
+    --def:#0E6E9E;--def-bg:#E6F1F8;--mech:#0C7B84;--mech-bg:#E1F1F2;
+    --algo:#7A4FD0;--algo-bg:#EFE9FB;--ex:#1E8A54;--ex-bg:#E6F4EC;--key:#B5730A;--key-bg:#F8EEDA;
+    --code-bg:#EDEBE1;
+    --serif:Georgia,"Iowan Old Style","Times New Roman",Times,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#12140F;--paper:#191C16;--ink:#E4E7DD;--muted:#9AA694;--faint:#6C7A66;
+    --line:#2A2E24;--line-strong:#3A3F31;
+    --accent:#4FC98A;--accent-soft:rgba(79,201,138,0.12);--cyan:#3FB6C6;
+    --def:#5AB0E0;--def-bg:rgba(90,176,224,0.12);--mech:#39B4BD;--mech-bg:rgba(57,180,189,0.12);
+    --algo:#B79BF2;--algo-bg:rgba(183,155,242,0.13);--ex:#5FC98A;--ex-bg:rgba(95,201,138,0.12);
+    --key:#E3AE4E;--key-bg:rgba(227,174,78,0.13);--code-bg:#22261D;
+  }}
+  :root[data-theme="light"]{--bg:#F3F1E9;--paper:#FBFAF5;--ink:#22271F;--muted:#5C6A5A;--faint:#8A9683;--line:#DED9C9;--line-strong:#CBC4AE;--accent:#15764A;--accent-soft:#E4EFE7;--cyan:#0E7C8B;--def:#0E6E9E;--def-bg:#E6F1F8;--mech:#0C7B84;--mech-bg:#E1F1F2;--algo:#7A4FD0;--algo-bg:#EFE9FB;--ex:#1E8A54;--ex-bg:#E6F4EC;--key:#B5730A;--key-bg:#F8EEDA;--code-bg:#EDEBE1;}
+  :root[data-theme="dark"]{--bg:#12140F;--paper:#191C16;--ink:#E4E7DD;--muted:#9AA694;--faint:#6C7A66;--line:#2A2E24;--line-strong:#3A3F31;--accent:#4FC98A;--accent-soft:rgba(79,201,138,0.12);--cyan:#3FB6C6;--def:#5AB0E0;--def-bg:rgba(90,176,224,0.12);--mech:#39B4BD;--mech-bg:rgba(57,180,189,0.12);--algo:#B79BF2;--algo-bg:rgba(183,155,242,0.13);--ex:#5FC98A;--ex-bg:rgba(95,201,138,0.12);--key:#E3AE4E;--key-bg:rgba(227,174,78,0.13);--code-bg:#22261D;}
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.72;font-size:17px;}
+  .wrap{max-width:800px;margin:0 auto;padding:0 22px 90px;}
+  .col{max-width:680px;margin:0 auto;}
+
+  .cover{background:var(--paper);border-bottom:3px solid var(--accent);margin-bottom:30px;}
+  .cover-in{max-width:800px;margin:0 auto;padding:44px 22px 30px;}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700;}
+  h1{font-family:var(--sans);font-size:37px;line-height:1.12;letter-spacing:-0.02em;margin:12px 0 10px;text-wrap:balance;}
+  .lede{font-size:18.5px;color:var(--muted);max-width:640px;}
+  .cover-meta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;font-family:var(--sans);font-size:12.5px;}
+  .badge{border:1px solid var(--line-strong);border-radius:999px;padding:5px 12px;color:var(--muted);background:var(--bg);}
+  .theme-toggle{position:fixed;top:16px;right:16px;z-index:50;font-family:var(--sans);font-size:12px;font-weight:600;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 11px;cursor:pointer;}
+
+  .part{font-family:var(--sans);font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);border-top:2px solid var(--accent);padding-top:12px;margin:64px 0 -8px;}
+  h2{font-family:var(--sans);font-size:25px;letter-spacing:-0.015em;margin:34px 0 6px;text-wrap:balance;scroll-margin-top:20px;}
+  h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:10px;}
+  h3{font-family:var(--sans);font-size:18.5px;margin:28px 0 4px;}
+  h4{font-family:var(--sans);font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:22px 0 4px;}
+  p{margin:12px 0;} a{color:var(--accent);}
+  strong{font-weight:700;} em{color:var(--muted);}
+  .sec-sub{color:var(--muted);font-size:16px;margin-top:0;}
+  hr{border:none;border-top:1px solid var(--line);margin:40px 0;}
+  code{font-family:var(--mono);font-size:0.85em;background:var(--code-bg);padding:1px 6px;border-radius:5px;}
+  .term{font-style:italic;font-weight:700;}
+
+  .toc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin:0 auto 18px;max-width:680px;}
+  .toc h4{margin-top:0;} .toc .pt{font-family:var(--sans);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:12px 0 3px;}
+  .toc ol{margin:2px 0 0;padding-left:20px;font-family:var(--sans);font-size:13.5px;line-height:1.75;}
+  .toc a{color:var(--ink);text-decoration:none;} .toc a:hover{color:var(--accent);text-decoration:underline;}
+
+  .call{border-left:4px solid var(--faint);border-radius:0 8px 8px 0;padding:12px 16px;margin:18px 0;font-family:var(--sans);font-size:14.5px;line-height:1.62;}
+  .call .lbl{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px;}
+  .call p{margin:6px 0;} .call code{font-size:0.85em;}
+  .def{background:var(--def-bg);border-color:var(--def);} .def .lbl{color:var(--def);}
+  .mech{background:var(--mech-bg);border-color:var(--mech);} .mech .lbl{color:var(--mech);}
+  .algo{background:var(--algo-bg);border-color:var(--algo);} .algo .lbl{color:var(--algo);}
+  .ex{background:var(--ex-bg);border-color:var(--ex);} .ex .lbl{color:var(--ex);}
+  .key{background:var(--key-bg);border-color:var(--key);} .key .lbl{color:var(--key);}
+
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:9px;padding:13px 15px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.55;margin:16px 0;}
+  pre code{background:none;padding:0;}
+
+  .tbl-wrap{overflow-x:auto;margin:18px 0;}
+  table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14px;}
+  th{text-align:left;background:var(--accent);color:#fff;padding:8px 11px;font-weight:600;}
+  td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--paper);}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+
+  .fig{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:22px 0;}
+  .fig svg{width:100%;height:auto;display:block;}
+  .fig .cap{font-family:var(--sans);font-size:12.5px;color:var(--faint);margin-top:10px;text-align:center;}
+
+  .gloss{font-family:var(--sans);font-size:14.5px;}
+  .gloss dt{font-weight:700;color:var(--accent);margin-top:12px;}
+  .gloss dd{margin:2px 0 0;color:var(--muted);}
+
+  ul,ol{padding-left:22px;} li{margin:5px 0;}
+  .foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--sans);font-size:12.5px;color:var(--faint);}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="tt" aria-label="Changer de thème">◐ Thème</button>
+
+<div class="cover">
+  <div class="cover-in">
+    <div class="kicker">Manuel de référence · Biologie &amp; Bioinformatique</div>
+    <h1>Surveillance des eaux usées par métagénomique</h1>
+    <p class="lede">Manuel de référence sur les fondements biologiques et bioinformatiques de l'épidémiologie basée sur les eaux usées. Les concepts scientifiques sont exposés en premier ; leur application au projet AquaVigil-WA figure en dernière partie.</p>
+    <div class="cover-meta">
+      <span class="badge">WBE · Métagénomique</span>
+      <span class="badge">Lomé · Togo</span>
+      <span class="badge">v2.0 · juillet 2026</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="toc">
+    <h4>Sommaire</h4>
+    <div class="pt">I · Fondements du vivant</div>
+    <ol>
+      <li><a href="#s1">Cellules, bactéries, virus</a></li>
+      <li><a href="#s2">L'ADN et l'information génétique</a></li>
+      <li><a href="#s3">Le dogme central</a></li>
+      <li><a href="#s4">Les bactéries</a></li>
+      <li><a href="#s5">Les virus</a></li>
+      <li><a href="#s6">La résistance aux antimicrobiens</a></li>
+    </ol>
+    <div class="pt">II · Les pathogènes et l'eau</div>
+    <ol start="7">
+      <li><a href="#s7">Voie oro-fécale et excrétion</a></li>
+      <li><a href="#s8">Choléra et toxine cholérique</a></li>
+      <li><a href="#s9">Typhoïde et poliomyélite</a></li>
+    </ol>
+    <div class="pt">III · De l'eau aux séquences</div>
+    <ol start="10">
+      <li><a href="#s10">Prélèvement et conservation</a></li>
+      <li><a href="#s11">Extraction de l'ADN</a></li>
+      <li><a href="#s12">Le séquençage</a></li>
+      <li><a href="#s13">Couverture et données FASTQ</a></li>
+    </ol>
+    <div class="pt">IV · L'analyse bioinformatique</div>
+    <ol start="14">
+      <li><a href="#s14">Métagénomique shotgun</a></li>
+      <li><a href="#s15">Contrôle qualité</a></li>
+      <li><a href="#s16">Les k-mers</a></li>
+      <li><a href="#s17">Kraken2</a></li>
+      <li><a href="#s18">Bracken</a></li>
+      <li><a href="#s19">Taxonomie et phylogénie</a></li>
+    </ol>
+    <div class="pt">V · Du signal à la décision</div>
+    <ol start="20">
+      <li><a href="#s20">Normalisation par biomarqueur</a></li>
+      <li><a href="#s21">Séries temporelles et alerte</a></li>
+    </ol>
+    <div class="pt">VI · Le projet AquaVigil-WA</div>
+    <ol start="22">
+      <li><a href="#s22">Pathogènes cibles</a></li>
+      <li><a href="#s23">Pipeline et outils</a></li>
+      <li><a href="#s24">Standards et écosystème</a></li>
+      <li><a href="#s25">Exemple de bout en bout</a></li>
+    </ol>
+  </div>
+
+  <div class="col">
+
+  <div class="call def">
+    <span class="lbl">Conventions du document</span>
+    <p><strong>Définition</strong> précise un terme ; <strong>Mécanisme</strong> décrit comment un phénomène biologique fonctionne ; <strong>Correspondance algorithmique</strong> relie un concept biologique à son équivalent en informatique ou en science des données ; <strong>Exemple</strong> illustre par un cas concret ; <strong>Synthèse</strong> résume l'essentiel d'une section.</p>
+  </div>
+
+  <div class="part">Partie I — Fondements du vivant</div>
+
+  <h2 id="s1"><span class="num">1</span>Cellules, bactéries, virus</h2>
+  <p>Le vivant s'organise en <span class="term">cellules</span>, unités closes délimitées par une membrane et contenant du matériel génétique. On distingue deux grands types d'organisation cellulaire. Les <span class="term">procaryotes</span> (les bactéries) sont des cellules simples, sans noyau : leur ADN flotte librement dans le cytoplasme. Les <span class="term">eucaryotes</span> (animaux, plantes, champignons) possèdent un noyau qui isole l'ADN, et des compartiments internes.</p>
+  <p>Les <span class="term">virus</span> constituent un cas à part : ce ne sont pas des cellules et ils ne sont pas considérés comme vivants au sens strict. Un virus est une particule minimale — un génome (ADN ou ARN) enfermé dans une coque protéique, la <span class="term">capside</span>. Il ne peut pas se reproduire seul : il doit infecter une cellule hôte et détourner sa machinerie.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th></th><th>Bactérie</th><th>Virus</th></tr>
+    <tr><td>Nature</td><td>cellule vivante</td><td>particule, non vivante</td></tr>
+    <tr><td>Taille</td><td>~1–5 µm</td><td>~20–300 nm (10–100× plus petit)</td></tr>
+    <tr><td>Génome</td><td>ADN, ~1–6 millions de bases</td><td>ADN ou ARN, ~3 000–300 000 bases</td></tr>
+    <tr><td>Reproduction</td><td>autonome (division)</td><td>seulement dans une cellule hôte</td></tr>
+    <tr><td>Exemple (projet)</td><td><em>Vibrio cholerae</em></td><td>Poliovirus</td></tr>
+  </table>
+  </div>
+
+  <h2 id="s2"><span class="num">2</span>L'ADN et l'information génétique</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p>L'<span class="term">ADN</span> (acide désoxyribonucléique) est une molécule en forme de double hélice qui stocke l'information héréditaire. Elle est écrite avec quatre <span class="term">bases</span> : adénine (<code>A</code>), thymine (<code>T</code>), guanine (<code>G</code>), cytosine (<code>C</code>).</p>
+  </div>
+  <p>L'ADN est constitué de deux <span class="term">brins</span> complémentaires enroulés l'un autour de l'autre. Les bases s'apparient toujours de la même façon : <strong>A face à T</strong>, <strong>G face à C</strong>. Cette règle d'appariement est fondamentale : connaître un brin (<code>ACGT</code>) détermine automatiquement l'autre (<code>TGCA</code>). C'est ce qui permet à la cellule de copier fidèlement son ADN, et c'est aussi ce qui rend le séquençage possible.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — pourquoi la complémentarité compte</span>
+    <p>Lors de la copie de l'ADN (réplication), les deux brins se séparent et chacun sert de <strong>modèle</strong> pour reconstruire son complémentaire. La fidélité de l'appariement A-T / G-C garantit que la copie est identique à l'original. Une erreur d'appariement non corrigée devient une <strong>mutation</strong>.</p>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>Un génome est une chaîne de caractères sur un alphabet de taille 4. La complémentarité fait qu'à toute séquence correspond son <strong>brin inverse-complémentaire</strong> — une involution simple (<code>A↔T</code>, <code>G↔C</code>, puis lecture à l'envers). Les algorithmes bioinformatiques traitent presque toujours une séquence <em>et</em> son complément, car on ignore de quel brin provient une lecture.</p>
+  </div>
+
+  <h2 id="s3"><span class="num">3</span>Le dogme central</h2>
+  <p>L'information génétique circule selon un schéma appelé <span class="term">dogme central</span> de la biologie moléculaire : <strong>ADN → ARN → protéine</strong>.</p>
+  <ol>
+    <li><span class="term">Transcription</span> : un gène (segment d'ADN) est recopié en une molécule d'<span class="term">ARN messager</span>. L'ARN est proche de l'ADN, mais utilise l'uracile (<code>U</code>) à la place de la thymine et n'a qu'un seul brin.</li>
+    <li><span class="term">Traduction</span> : l'ARN messager est lu par groupes de trois bases (les <span class="term">codons</span>), chaque codon désignant un acide aminé. L'enchaînement des acides aminés forme une <span class="term">protéine</span>.</li>
+  </ol>
+  <p>Les protéines sont les <strong>exécutantes</strong> de la cellule : enzymes, structures, toxines. Un <span class="term">gène</span> est donc une portion d'ADN qui code une protéine (ou un ARN fonctionnel) ; le <span class="term">génome</span> est l'ensemble des gènes et de l'ADN d'un organisme.</p>
+  <div class="call key">
+    <span class="lbl">Synthèse</span>
+    <p>L'ADN stocke l'information, l'ARN la transporte, les protéines l'exécutent. Détecter un pathogène par son ADN revient à détecter la <strong>présence de ses gènes</strong> — donc de l'organisme lui-même — dans l'échantillon.</p>
+  </div>
+
+  <h2 id="s4"><span class="num">4</span>Les bactéries</h2>
+  <p>Une bactérie est une cellule unique, close, avec un <span class="term">chromosome</span> circulaire d'ADN (souvent 1 à 6 millions de bases). Beaucoup de bactéries portent en plus de petits anneaux d'ADN indépendants, les <span class="term">plasmides</span>, qui peuvent contenir des gènes utiles à la survie — par exemple des gènes de résistance aux antibiotiques.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — division et transfert de gènes</span>
+    <p>Les bactéries se multiplient par <strong>division binaire</strong> : la cellule copie son chromosome puis se scinde en deux. Surtout, elles peuvent <strong>échanger des plasmides entre elles</strong>, y compris entre espèces différentes, par un pont de contact appelé <span class="term">conjugaison</span>. Ce <strong>transfert horizontal de gènes</strong> explique pourquoi un gène de résistance peut se propager très vite dans une communauté microbienne — un point central pour la surveillance de la résistance.</p>
+  </div>
+
+  <h2 id="s5"><span class="num">5</span>Les virus</h2>
+  <p>Un virus est un génome protégé par une capside. Son génome peut être fait d'ADN ou d'<span class="term">ARN</span>. Le Poliovirus, par exemple, est un virus à ARN d'environ 7 500 bases.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — cycle de réplication</span>
+    <p>Un virus se fixe sur une cellule cible, y injecte son génome, puis <strong>détourne la machinerie cellulaire</strong> pour fabriquer des milliers de copies de lui-même. La cellule finit par éclater et libérer les nouvelles particules, qui infectent d'autres cellules. C'est cette amplification massive qui rend un virus détectable dans les selles, puis dans les eaux usées.</p>
+  </div>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — pourquoi les virus à ARN mutent davantage</span>
+    <p>La copie de l'ARN est réalisée par une enzyme (ARN polymérase) <strong>dépourvue de correction d'erreurs</strong>, contrairement à la copie de l'ADN. Les virus à ARN accumulent donc beaucoup plus de mutations — ce qui les rend variables (variants), mais reste sans conséquence pour leur détection par métagénomique, qui repère des régions conservées.</p>
+  </div>
+
+  <h2 id="s6"><span class="num">6</span>La résistance aux antimicrobiens (RAM)</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p>La <span class="term">RAM</span> est la capacité d'un microorganisme à survivre à un antimicrobien censé le tuer. Elle repose souvent sur un <strong>gène de résistance</strong> précis, porté par le chromosome ou un plasmide.</p>
+  </div>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — l'exemple de blaNDM-1</span>
+    <p>Le gène <code>blaNDM-1</code> code une enzyme (une carbapénémase) qui <strong>découpe les antibiotiques de la famille des carbapénèmes</strong> avant qu'ils n'agissent, les neutralisant. Ce gène est souvent porté par un plasmide, donc <strong>transférable</strong> entre bactéries. Le détecter dans les eaux usées mesure la pression de résistance circulant dans la population, indépendamment de l'espèce qui le porte.</p>
+  </div>
+
+  <div class="part">Partie II — Les pathogènes et l'eau</div>
+
+  <h2 id="s7"><span class="num">7</span>Voie oro-fécale et excrétion</h2>
+  <p>Les pathogènes surveillés se transmettent par la <span class="term">voie oro-fécale</span> : ils sont ingérés (eau ou aliments contaminés), se multiplient dans le tube digestif, puis sont <strong>excrétés dans les selles</strong> en grande quantité. C'est ce qui les fait aboutir dans les eaux usées.</p>
+  <div class="call key">
+    <span class="lbl">Synthèse — le fondement biologique de la WBE</span>
+    <p>L'excrétion commence <strong>tôt</strong>, souvent avant les symptômes graves, et concerne aussi les <strong>porteurs asymptomatiques</strong>. Le signal dans l'eau précède donc le signal hospitalier — c'est la base de l'alerte précoce.</p>
+  </div>
+
+  <h2 id="s8"><span class="num">8</span>Choléra et toxine cholérique</h2>
+  <p><em>Vibrio cholerae</em> est une bactérie en forme de virgule qui colonise l'intestin grêle. Sa dangerosité tient à une toxine.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — comment la toxine provoque la diarrhée</span>
+    <p>La bactérie produit la <span class="term">toxine cholérique</span>, codée par les gènes <code>ctxA</code> et <code>ctxB</code>. La sous-unité B fixe la toxine sur les cellules intestinales ; la sous-unité A pénètre et <strong>dérègle la pompe à ions</strong> de la cellule, qui se met à sécréter massivement de l'eau dans l'intestin. Résultat : une diarrhée aqueuse intense et une déshydratation rapide. Les gènes <code>ctxA/ctxB</code> sont donc des <strong>marqueurs génétiques directs</strong> de la souche pathogène — ce sont eux que la piste génomique du tableau de bord met en évidence.</p>
+  </div>
+
+  <h2 id="s9"><span class="num">9</span>Typhoïde et poliomyélite</h2>
+  <p><em>Salmonella</em> Typhi provoque la <span class="term">fièvre typhoïde</span>. La bactérie traverse la paroi intestinale et se dissémine dans l'organisme ; l'antigène Vi (gène <code>viaB</code>) l'aide à échapper au système immunitaire. Elle est excrétée dans les selles, parfois durablement chez les porteurs sains.</p>
+  <p>Le <span class="term">Poliovirus</span> se multiplie dans l'intestin et est excrété dans les selles pendant plusieurs semaines, y compris par des personnes sans symptômes. Pour cette raison, la <strong>surveillance environnementale des eaux usées est un pilier reconnu de l'éradication de la polio</strong> par l'OMS : elle détecte la circulation du virus même en l'absence de cas paralytiques.</p>
+
+  <div class="part">Partie III — De l'eau aux séquences</div>
+
+  <h2 id="s10"><span class="num">10</span>Prélèvement et conservation</h2>
+  <p>Un échantillon d'environ 250 mL d'eau usée est prélevé à un site donné. La <span class="term">chaîne du froid</span> (≈ 4 °C) est ensuite essentielle.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — pourquoi le froid</span>
+    <p>Les eaux usées contiennent des <span class="term">nucléases</span>, des enzymes qui dégradent l'ADN et l'ARN. Le froid ralentit ces enzymes et la prolifération bactérienne, préservant l'intégrité du matériel génétique jusqu'à l'extraction. Un échantillon mal conservé perd son signal.</p>
+  </div>
+
+  <h2 id="s11"><span class="num">11</span>Extraction de l'ADN</h2>
+  <p>L'extraction transforme l'échantillon en un tube d'ADN purifié, prêt à séquencer. Elle se déroule en trois temps.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — les trois étapes de l'extraction</span>
+    <p><strong>1. Lyse</strong> : on ouvre les cellules et capsides pour libérer l'ADN, par des détergents, des enzymes ou un broyage à billes. <strong>2. Purification</strong> : on élimine protéines, lipides et débris ; l'ADN, chargé négativement, est fixé sélectivement sur une membrane de silice ou des billes magnétiques, puis lavé. <strong>3. Élution</strong> : l'ADN purifié est récupéré dans un petit volume de liquide.</p>
+  </div>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — le contrôle qualité de l'ADN</span>
+    <p>La qualité se vérifie par spectrophotométrie : on mesure l'absorption lumineuse à 260 nm (ADN) et 280 nm (protéines). Un rapport <code>A260/A280 ≈ 1,8</code> indique un ADN pur ; un rapport plus bas signale une contamination protéique.</p>
+  </div>
+
+  <h2 id="s12"><span class="num">12</span>Le séquençage</h2>
+  <p>Le <span class="term">séquençage</span> lit l'ordre des bases de l'ADN et le convertit en texte. Deux technologies dominent, aux principes physiques différents.</p>
+
+  <h3>Illumina — séquençage par synthèse</h3>
+  <div class="call mech">
+    <span class="lbl">Mécanisme</span>
+    <p>L'ADN est d'abord fragmenté et pourvu d'<span class="term">adaptateurs</span> (courtes séquences connues) à ses extrémités. Chaque fragment se fixe sur une plaque (<em>flow cell</em>) et y est amplifié en un amas de copies identiques. Le séquençage procède ensuite <strong>base par base</strong> : à chaque cycle, on ajoute une base fluorescente qui s'apparie au brin en cours de synthèse, on <strong>photographie la couleur émise</strong> (une par base), puis on recommence. La suite des couleurs donne la séquence. Résultat : des lectures <strong>courtes (~150 bases) et très précises</strong>. Lire le fragment par ses deux extrémités donne des lectures <span class="term">paired-end</span> (R1 et R2).</p>
+  </div>
+
+  <h3>Nanopore (ONT) — lecture par pore</h3>
+  <div class="call mech">
+    <span class="lbl">Mécanisme</span>
+    <p>Un brin d'ADN est tiré à travers un <span class="term">pore protéique</span> inséré dans une membrane parcourue par un courant électrique. Chaque base qui traverse le pore <strong>modifie le courant de façon caractéristique</strong> ; un modèle logiciel traduit ces variations en séquence. Avantages : lectures <strong>longues</strong> et appareil <strong>portable</strong> (MinION, format clé USB) — utile sur le terrain. Inconvénient : taux d'erreur plus élevé.</p>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>Illumina fournit beaucoup d'observations courtes et fiables ; Nanopore, moins d'observations mais plus longues et plus bruitées — un arbitrage classique entre <strong>précision et contexte</strong>, comparable au choix entre features nombreux mais locaux et features rares mais globaux.</p>
+  </div>
+
+  <h2 id="s13"><span class="num">13</span>Couverture et données FASTQ</h2>
+  <div class="call def">
+    <span class="lbl">Définition — couverture</span>
+    <p>La <span class="term">couverture</span> (ou profondeur) est le nombre moyen de lectures qui recouvrent une position donnée du génome. Une couverture élevée fiabilise la détection ; une couverture faible peut manquer un pathogène rare.</p>
+  </div>
+  <p>La sortie du séquenceur est un fichier <span class="term">FASTQ</span>. Chaque lecture y occupe quatre lignes : un identifiant, la séquence de bases, un séparateur, et une <strong>ligne de qualité</strong> (un caractère par base).</p>
+  <pre><code>@READ_00001              ← identifiant
+ACGTTGCA...TCA           ← séquence (les bases)
++                        ← séparateur
+IIIIFFF...##             ← qualité (un score par base)</code></pre>
+  <div class="call def">
+    <span class="lbl">Définition — score de qualité Phred</span>
+    <p>Chaque base reçoit un <span class="term">score Phred</span> <code>Q = −10 × log₁₀(p)</code>, où <code>p</code> est la probabilité que la base soit erronée. <code>Q30</code> correspond à <code>p = 0,001</code>, soit 99,9 % de fiabilité. Le score conditionne les étapes de nettoyage.</p>
+  </div>
+
+  <div class="part">Partie IV — L'analyse bioinformatique</div>
+
+  <h2 id="s14"><span class="num">14</span>Métagénomique shotgun</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p>La <span class="term">métagénomique shotgun</span> consiste à séquencer sans distinction <strong>tout l'ADN d'un échantillon mélangé</strong>, puis à trier informatiquement les lectures par organisme. Elle s'oppose au séquençage ciblé (16S), qui ne lit qu'un gène marqueur commun aux bactéries.</p>
+  </div>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Approche</th><th>Ce qu'on lit</th><th>Portée</th></tr>
+    <tr><td>Ciblée (16S / amplicon)</td><td>un seul gène marqueur</td><td>bactéries, sans détail d'espèce ni virus</td></tr>
+    <tr><td>Shotgun (métagénomique)</td><td>tout l'ADN</td><td>bactéries, virus, gènes de résistance — au niveau espèce</td></tr>
+  </table>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>La métagénomique est un problème de <strong>classification à très grande échelle sur données non étiquetées</strong> : des millions de fragments, chacun à rattacher à une espèce inconnue, à partir d'une base de référence. Tout l'enjeu bioinformatique est de faire cette attribution vite et sans erreur.</p>
+  </div>
+
+  <h2 id="s15"><span class="num">15</span>Contrôle qualité</h2>
+  <p>Avant toute analyse, les lectures brutes sont inspectées et nettoyées — l'équivalent d'un prétraitement de données.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Outil</th><th>Fonction</th><th>Détail</th></tr>
+    <tr><td><span class="mono">FastQC</span></td><td>diagnostic qualité</td><td>qualité par position, contenu en G+C, présence d'adaptateurs, séquences dupliquées</td></tr>
+    <tr><td><span class="mono">Trimmomatic</span></td><td>nettoyage</td><td>coupe les bases de faible qualité (fenêtre glissante), retire les adaptateurs, élimine les lectures trop courtes</td></tr>
+    <tr><td><span class="mono">MultiQC</span></td><td>agrégation</td><td>réunit tous les rapports en un seul document de synthèse</td></tr>
+  </table>
+  </div>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — pourquoi retirer les adaptateurs</span>
+    <p>Les adaptateurs sont des séquences artificielles ajoutées pendant la préparation, absentes du génome réel. S'ils restent dans les lectures, ils faussent la classification. Trimmomatic les reconnaît par comparaison et les découpe ; il élimine aussi les extrémités où la qualité chute.</p>
+  </div>
+
+  <h2 id="s16"><span class="num">16</span>Les k-mers</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p>Un <span class="term">k-mer</span> est une sous-chaîne de longueur <code>k</code> extraite d'une séquence par fenêtre glissante. Pour <code>k=4</code>, la séquence <code>ACGTA</code> produit <code>ACGT</code> puis <code>CGTA</code>. Une lecture de longueur L produit L−k+1 k-mers.</p>
+  </div>
+  <div class="fig">
+    <svg viewBox="0 0 680 118" role="img" aria-label="Découpage d'une lecture en k-mers">
+      <g font-family="ui-monospace,monospace" font-size="15">
+        <text x="20" y="26" fill="var(--muted)" font-family="system-ui" font-size="12">Lecture :</text>
+        <text x="20" y="50" fill="var(--ink)" letter-spacing="6">A C G T A C G G T</text>
+        <g font-size="12" fill="var(--accent)">
+          <rect x="16" y="64" width="118" height="20" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="24" y="78">ACGTA (k=5)</text>
+          <rect x="44" y="88" width="118" height="20" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="52" y="102">CGTAC</text>
+        </g>
+        <text x="300" y="80" font-family="system-ui" font-size="12" fill="var(--muted)">la fenêtre glisse d'une base à chaque fois →</text>
+      </g>
+    </svg>
+    <div class="cap">Chaque k-mer devient une clé recherchée dans la base de référence.</div>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>Un k-mer est un <strong>n-gram</strong>, comme en traitement du langage. L'ensemble des k-mers d'un génome forme sa signature, de la même manière qu'un sac de n-grams caractérise une langue. Pour réduire la mémoire, Kraken2 n'indexe qu'un k-mer représentatif par fenêtre (le <span class="term">minimizer</span>), et traite un k-mer et son inverse-complément comme identiques (forme <span class="term">canonique</span>).</p>
+  </div>
+
+  <h2 id="s17"><span class="num">17</span>Kraken2 — classification taxonomique</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p><span class="term">Kraken2</span> attribue chaque lecture à un organisme en comparant ses k-mers à une <strong>base de référence</strong> qui associe chaque k-mer connu à une position dans l'arbre du vivant.</p>
+  </div>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — comment la base est construite puis interrogée</span>
+    <p><strong>Construction</strong> : on prend des milliers de génomes de référence, on les découpe en k-mers, et on associe chaque k-mer au <strong>plus petit ancêtre commun</strong> des organismes qui le possèdent. Un k-mer très spécifique pointe vers une espèce ; un k-mer partagé pointe vers un rang plus élevé (genre, famille). <strong>Interrogation</strong> : pour une lecture, Kraken2 récupère les organismes désignés par chacun de ses k-mers, puis choisit le chemin racine-vers-feuille le mieux soutenu — algorithme du <span class="term">LCA</span> (Lowest Common Ancestor). Le paramètre <code>confidence</code> impose un minimum de k-mers concordants avant de valider, ce qui limite les faux positifs.</p>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>Kraken2 n'est pas un modèle appris : c'est un <strong>immense dictionnaire {k-mer → taxon} indexé par hachage</strong>, interrogé en temps constant. La base de référence joue le rôle du modèle pré-entraîné ; la classification est un enchaînement de lookups, donc rapide et déterministe.</p>
+  </div>
+
+  <h2 id="s18"><span class="num">18</span>Bracken — estimation des abondances</h2>
+  <p>Kraken2 laisse beaucoup de lectures attribuées à un rang <strong>vague</strong> (genre plutôt qu'espèce), faute de k-mers assez spécifiques. Bracken corrige cela.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — la réestimation</span>
+    <p>Bracken s'appuie sur une distribution, calculée à l'avance à partir de la base, indiquant quelle fraction des lectures de chaque espèce se retrouve classée à quel niveau. Il utilise cette information pour <strong>redistribuer probabilistiquement</strong> les lectures ambiguës vers les espèces les plus vraisemblables, et produit une abondance par espèce.</p>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>C'est une <strong>réestimation bayésienne</strong> : un a priori (la distribution issue de la base) sert à réattribuer des observations ambiguës, dans l'esprit d'un algorithme espérance-maximisation qui affine une distribution de mélange.</p>
+  </div>
+
+  <h2 id="s19"><span class="num">19</span>Taxonomie et phylogénie</h2>
+  <div class="call def">
+    <span class="lbl">Définition</span>
+    <p>La <span class="term">taxonomie</span> classe les organismes dans une hiérarchie emboîtée : domaine → règne → embranchement → classe → ordre → famille → genre → espèce. La <span class="term">phylogénie</span> retrace leurs liens de parenté évolutive sous forme d'arbre.</p>
+  </div>
+  <p>Chaque organisme reçoit un identifiant unique (<span class="term">taxid</span>) dans la base <em>NCBI Taxonomy</em>, la référence mondiale. Kraken2 raisonne directement sur cet arbre : classer une lecture, c'est la placer sur un nœud (une espèce si possible, un rang plus haut sinon).</p>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>L'arbre taxonomique est une <strong>structure hiérarchique</strong> classique. Le LCA de Kraken2 est l'opération « plus petit ancêtre commun » sur cet arbre — la même primitive que dans de nombreux algorithmes de graphes.</p>
+  </div>
+
+  <div class="part">Partie V — Du signal à la décision</div>
+
+  <h2 id="s20"><span class="num">20</span>Normalisation par biomarqueur</h2>
+  <p>La concentration mesurée d'un pathogène dépend de facteurs parasites : dilution par la pluie, débit, taille de la population raccordée, dégradation. Deux échantillons comparables en nombre de malades peuvent donner des signaux très différents. La <span class="term">normalisation</span> corrige ce biais.</p>
+  <div class="call mech">
+    <span class="lbl">Mécanisme — le rôle du PMMoV</span>
+    <p>Le <span class="term">PMMoV</span> (<em>Pepper Mild Mottle Virus</em>) est un virus végétal, présent dans les poivrons et sauces, ingéré quotidiennement et excrété en très grande quantité. Il est <strong>abondant, stable et spécifique des eaux usées humaines</strong>, indépendamment de l'état de santé. Il subit la même dilution que le pathogène. Diviser le signal du pathogène par celui du PMMoV <strong>annule l'effet de dilution</strong> et rend les mesures comparables entre sites et dans le temps. Le crAssphage, un virus bactérien de l'intestin humain, sert de référence secondaire.</p>
+  </div>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>C'est une <strong>normalisation par contrôle interne</strong>, identique dans son principe à la normalisation par facteur de taille de librairie en RNA-seq. Le PMMoV joue le rôle d'un dénominateur de référence qui absorbe les variations techniques.</p>
+  </div>
+  <pre><code>Signal normalisé = (reads_pathogène / reads_PMMoV) × 1 000 000
+Ratio            =  Signal normalisé / ligne de base du site</code></pre>
+
+  <h2 id="s21"><span class="num">21</span>Séries temporelles et alerte</h2>
+  <p>Le signal normalisé, suivi semaine après semaine, forme une série temporelle par site et par pathogène. La décision d'alerte repose sur trois niveaux d'analyse.</p>
+  <ol>
+    <li><strong>Ratio vs ligne de base</strong> : seuils fixes — vigilance à partir de 2×, alerte à partir de 4× le niveau habituel.</li>
+    <li><strong>Tendance</strong> : un modèle <span class="term">ARIMA</span> détecte une progression significative au-delà du bruit.</li>
+    <li><strong>Anomalie</strong> : une <span class="term">Isolation Forest</span> repère les points inhabituels non expliqués par la variation ordinaire.</li>
+  </ol>
+  <div class="call algo">
+    <span class="lbl">Correspondance algorithmique</span>
+    <p>Cette partie relève entièrement de la science des données : normalisation, seuils, modélisation de série temporelle (ARIMA) et détection d'anomalie non supervisée (Isolation Forest). Sa valeur tient à la <strong>traçabilité</strong> : chaque alerte reste explicable à partir de grandeurs mesurées.</p>
+  </div>
+
+  <div class="part">Partie VI — Le projet AquaVigil-WA</div>
+
+  <h2 id="s22"><span class="num">22</span>Pathogènes cibles</h2>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Cible</th><th>Maladie</th><th>Nature</th><th>Marqueurs / notes</th></tr>
+    <tr><td><em>Vibrio cholerae</em></td><td>Choléra</td><td>Bactérie</td><td>gènes <code>ctxA/ctxB</code> (toxine)</td></tr>
+    <tr><td><em>Salmonella</em> Typhi</td><td>Typhoïde</td><td>Bactérie</td><td>antigène Vi (<code>viaB</code>)</td></tr>
+    <tr><td>Poliovirus</td><td>Poliomyélite</td><td>Virus (ARN)</td><td>surveillance environnementale OMS</td></tr>
+    <tr><td>Indicateur RAM</td><td>Résistance</td><td>Gène</td><td><code>blaNDM-1</code>, plasmidique</td></tr>
+  </table>
+  </div>
+
+  <h2 id="s23"><span class="num">23</span>Pipeline et outils</h2>
+  <p>Le pipeline enchaîne les étapes décrites dans les parties III et IV, orchestrées automatiquement.</p>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Outil</th><th>Rôle dans le pipeline</th><th>Analogie informatique</th></tr>
+    <tr><td><span class="mono">Snakemake</span></td><td>orchestrer l'ordre d'exécution des étapes</td><td>graphe de tâches (type Airflow / Makefile)</td></tr>
+    <tr><td><span class="mono">FastQC / MultiQC</span></td><td>diagnostic qualité des lectures</td><td>exploration de données</td></tr>
+    <tr><td><span class="mono">Trimmomatic</span></td><td>nettoyage des lectures</td><td>prétraitement</td></tr>
+    <tr><td><span class="mono">Kraken2</span></td><td>classification des lectures par espèce</td><td>classifieur par index de k-mers</td></tr>
+    <tr><td><span class="mono">Bracken</span></td><td>estimation des abondances par espèce</td><td>réestimation bayésienne</td></tr>
+    <tr><td><span class="mono">InSilicoSeq</span></td><td>génération de lectures simulées pour valider</td><td>données synthétiques / tests</td></tr>
+  </table>
+  </div>
+  <div class="call def">
+    <span class="lbl">Définition — MiniKraken</span>
+    <p>La <span class="term">base MiniKraken</span> est une version compacte (~8 Go) de la base de référence Kraken2, adaptée à des ressources matérielles limitées. C'est le « modèle de référence » interrogé lors de la classification.</p>
+  </div>
+
+  <h2 id="s24"><span class="num">24</span>Standards et écosystème</h2>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Nom</th><th>Nature</th><th>Rôle</th></tr>
+    <tr><td>PHA4GE</td><td>standard de format ouvert</td><td>interopérabilité des données de surveillance</td></tr>
+    <tr><td>WHO WES</td><td>guide de l'OMS</td><td>cadre des protocoles de prélèvement</td></tr>
+    <tr><td>GLOWACON</td><td>consortium international</td><td>réseau de surveillance des eaux usées</td></tr>
+    <tr><td>NCBI SRA</td><td>archive publique</td><td>source de données réelles et dépôt des résultats</td></tr>
+  </table>
+  </div>
+
+  <h2 id="s25"><span class="num">25</span>Exemple de bout en bout</h2>
+  <p>Site <span class="mono">LMC-001</span>, semaine 12. Le séquençage produit 1,2 million de lectures ; après nettoyage et classification, le rapport Bracken donne (extrait) :</p>
+  <pre><code>espèce                 lectures
+Vibrio cholerae             624
+Escherichia coli         81 000
+Klebsiella pneumoniae    53 000
+PMMoV (normalisateur)   260 000</code></pre>
+  <pre><code>1) Signal normalisé = 624 / 260000 × 1e6   = 2 400 copies/M
+2) Ligne de base du site                    =   500 copies/M
+3) Ratio = 2400 / 500                       =   4,8×
+4) 4,8 ≥ seuil rouge (4,0)      →  ALERTE ROUGE</code></pre>
+  <div class="call key">
+    <span class="lbl">Synthèse</span>
+    <p>Chaque valeur est traçable, des lectures brutes jusqu'à la décision. L'alerte n'est pas le produit d'une boîte noire mais d'une chaîne de calcul vérifiable, reproduisant exactement le raisonnement affiché par le tableau de bord.</p>
+  </div>
+
+  <h2 id="gloss">Glossaire express</h2>
+  <dl class="gloss">
+    <dt>ADN / ARN</dt><dd>Molécules porteuses de l'information génétique (alphabet A,C,G,T ; U dans l'ARN).</dd>
+    <dt>Base / appariement</dt><dd>Lettre de l'ADN ; A s'apparie à T, G à C.</dd>
+    <dt>Dogme central</dt><dd>Flux de l'information : ADN → ARN → protéine.</dd>
+    <dt>Gène / génome</dt><dd>Segment codant une fonction ; ensemble de l'ADN d'un organisme.</dd>
+    <dt>Plasmide</dt><dd>Petit ADN circulaire transférable entre bactéries ; vecteur fréquent de résistance.</dd>
+    <dt>Capside</dt><dd>Coque protéique protégeant le génome d'un virus.</dd>
+    <dt>Voie oro-fécale</dt><dd>Transmission par ingestion puis excrétion dans les selles.</dd>
+    <dt>Lecture (read)</dt><dd>Fragment d'ADN lu par le séquenceur (~150 bases).</dd>
+    <dt>FASTQ</dt><dd>Format des lectures brutes : séquence + qualité par base.</dd>
+    <dt>Phred (Q)</dt><dd>Score de qualité par base en échelle log ; Q30 = 99,9 % fiable.</dd>
+    <dt>Couverture</dt><dd>Nombre moyen de lectures recouvrant une position du génome.</dd>
+    <dt>Métagénomique shotgun</dt><dd>Séquençage de tout l'ADN d'un échantillon mixte.</dd>
+    <dt>k-mer</dt><dd>Sous-chaîne de longueur k ; équivalent d'un n-gram.</dd>
+    <dt>Kraken2 / LCA</dt><dd>Classifieur par index de k-mers ; arbitrage par plus petit ancêtre commun.</dd>
+    <dt>Bracken</dt><dd>Réestimation bayésienne des abondances par espèce.</dd>
+    <dt>Taxonomie / taxid</dt><dd>Classification hiérarchique du vivant ; identifiant unique d'un taxon.</dd>
+    <dt>PMMoV / crAssphage</dt><dd>Biomarqueurs stables servant de référence de normalisation.</dd>
+    <dt>RAM / blaNDM</dt><dd>Résistance aux antimicrobiens ; gène de carbapénémase.</dd>
+  </dl>
+
+  <div class="foot">
+    Manuel WBE &amp; Métagénomique · AquaVigil-WA · v2.0 · Lomé, Togo · Document interne d'équipe.<br>
+    Complément du <em>Document de Références Scientifiques</em> et du <em>Plan de Travail</em>.
+  </div>
+
+  </div>
+</div>
+
+<script>
+  (function(){
+    var root=document.documentElement, btn=document.getElementById('tt');
+    function dark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme:dark)').matches;}
+    btn.addEventListener('click',function(){root.setAttribute('data-theme',dark()?'light':'dark');});
+  })();
+</script>
+
+</body>
+</html>
