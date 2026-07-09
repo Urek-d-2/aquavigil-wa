@@ -73,3 +73,10 @@ config/local_config.yaml
 
 # --- Snakemake cache ---
 .snakemake/
+
+# --- Node / dashboard React ---
+dashboard/node_modules/
+dashboard/dist/
+node_modules/
+dist/
+*.log
